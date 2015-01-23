@@ -68,4 +68,29 @@
 			$('.options').addClass('cover');
 		}
 	}
+	$('.start, .structure').each(function() {
+		$(this).append('<span></span>');
+		$(this).children('span').bind('click', function() {
+			$(this).toggleClass('active');
+			$(this).parent().children('div').children('div').slideToggle(0);
+			return false;
+		});
+	});
+	$('.modal').append('<span class="close"></span>');
+	var bh = 0;
+	$('[data-open]').bind('click', function() {
+		$('.fade').stop(true,true).fadeIn(500);
+		$('.modal[data-modal="'+$(this).attr('data-open')+'"]').css({
+			'margin-top': -$('.modal[data-modal="'+$(this).attr('data-open')+'"]').outerHeight()/2+'px'
+		}).stop(true,true).fadeIn(500);
+		bh = $(document).scrollTop();
+		$('body').css({'position': 'fixed', 'top': -bh+'px', 'overflow-y': 'scroll'});
+		return false;
+	});
+	$('.modal .close, .fade').bind('click', function() {
+		$('.fade, .modal').stop(true,true).fadeOut(500);
+		$('body').css({'position': 'static', 'top': '0', 'overflow-y': 'auto'});
+		$(document).scrollTop(bh);
+		return false;
+	});
 });
